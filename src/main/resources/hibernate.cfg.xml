@@ -9,7 +9,7 @@
 <!--        <property name="hibernate.connection.url">${JDBC_DATABASE_URL:jdbc:mysql://localhost:3306/file_store}</property>-->
 <!--        <property name="hibernate.connection.username">${JDBC_DATABASE_USERNAME:root}</property>-->
 <!--        <property name="hibernate.connection.password">${JDBC_DATABASE_PASSWORD:elhI;Ylx,3))}</property>-->
-        <property name="hibernate.connection.url">mysql://xekmddr1z8x4qggm:mzvthd0zutb6bb34@nuepp3ddzwtnggom.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/seym5qikew9ydjhl</property>
+        <property name="hibernate.connection.url">jdbc:mysql://nuepp3ddzwtnggom.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/seym5qikew9ydjhl</property>
         <property name="hibernate.connection.username">xekmddr1z8x4qggm</property>
         <property name="hibernate.connection.password">mzvthd0zutb6bb34</property>
         <property name="hibernate.default_schema">file_store</property>
