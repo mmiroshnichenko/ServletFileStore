@@ -11,17 +11,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
-public class FileController extends HttpServlet {
+public class FileUpdateController extends HttpServlet {
     private final FileService fileService = new FileService();
     private final EventService eventService = new EventService();
     private final UserService userService = new UserService();
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String fileName = request.getParameter("filename");
-        String filePath = request.getParameter("filepath");
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String fileName = request.getParameter("newFilename");
+        String filePath = request.getParameter("newFilepath");
         Long userId = Long.valueOf(request.getParameter("userId"));
+        Long id = Long.valueOf(request.getParameter("id"));
         File existsFile = fileService.getByNameAndPath(fileName, filePath);
         if (existsFile != null) {
             request.setAttribute("file", existsFile);
@@ -33,29 +34,20 @@ public class FileController extends HttpServlet {
             request.getRequestDispatcher("view/userNotFound.jsp").forward(request, response);
             return;
         }
+        File file = fileService.getById(id);
+        if (file == null) {
+            request.getRequestDispatcher("view/fileNotFound.jsp").forward(request, response);
+            return;
+        }
 
-        File file = fileService.saveNewFile(fileName, filePath);
-        eventService.saveCreated(file, user);
+        fileService.update(file, fileName, filePath);
+        eventService.saveUpdated(file, user);
 
         request.setAttribute("file", file);
         request.getRequestDispatcher("view/file.jsp").forward(request, response);
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("id") != null) {
-            Long id = Long.valueOf(request.getParameter("id"));
-            File file = fileService.getById(id);
-            if (file == null) {
-                request.getRequestDispatcher("view/fileNotFound.jsp").forward(request, response);
-                return;
-            }
-
-            request.setAttribute("file", file);
-            request.getRequestDispatcher("view/file.jsp").forward(request, response);
-        } else {
-            List<File> files = fileService.getAll();
-            request.setAttribute("filesList", files);
-            request.getRequestDispatcher("view/filesList.jsp").forward(request, response);
-        }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
     }
 }

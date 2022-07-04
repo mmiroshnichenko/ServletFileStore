@@ -26,42 +26,6 @@ public class UserController extends HttpServlet {
         request.getRequestDispatcher("view/user.jsp").forward(request, response);
     }
 
-    @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("newUsername");
-        Long id = Long.valueOf(request.getParameter("id"));
-        User existedUser = userService.getByUsername(username);
-        if (existedUser != null) {
-            request.setAttribute("user", existedUser);
-            request.getRequestDispatcher("view/userExists.jsp").forward(request, response);
-            return;
-        }
-
-        User user = userService.getById(id);
-        if (user == null) {
-            request.getRequestDispatcher("view/userNotFound.jsp").forward(request, response);
-            return;
-        }
-
-        userService.updateUser(user, username);
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("view/user.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Long id = Long.valueOf(request.getParameter("id"));
-        User user = userService.getById(id);
-        if (user == null) {
-            request.getRequestDispatcher("view/userNotFound.jsp").forward(request, response);
-            return;
-        }
-
-        userService.deleteUser(user);
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("view/userDeleted.jsp").forward(request, response);
-    }
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("id") != null) {
             Long id = Long.valueOf(request.getParameter("id"));
