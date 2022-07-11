@@ -39,10 +39,14 @@ public class FileService {
         return fileRepository.getById(id);
     }
 
-    public File update(File file, String name, String path) {
+    public File updateFile(File file, String name, String path) {
         file.setName(name);
         file.setPath(path);
         file.setUpdated(new Date());
+        return update(file);
+    }
+
+    public File update(File file) {
         return fileRepository.update(file);
     }
 

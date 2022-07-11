@@ -3,7 +3,6 @@ package org.mmyroshnychenko.service;
 import org.junit.Test;
 import org.mmyroshnychenko.model.File;
 import org.mmyroshnychenko.repository.FileRepository;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -42,8 +41,8 @@ public class FileServiceTest {
     @Test
     public void shouldUpdateFileTest() {
         File updatedFile = new File(1L, "updatedName", "updatedPath", date, new Date());
-        Mockito.when(mockFileRepository.update(updatedFile)).thenReturn(updatedFile);
-        File updatedMockFile = fileService.update(getFile(), "updatedName", "updatedPath");
+        Mockito.when(mockFileRepository.update(getFile())).thenReturn(updatedFile);
+        File updatedMockFile = fileService.update(getFile());
 
         assertEquals(updatedFile, updatedMockFile);
     }

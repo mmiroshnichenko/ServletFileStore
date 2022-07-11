@@ -40,7 +40,7 @@ public class FileUpdateController extends HttpServlet {
             return;
         }
 
-        fileService.update(file, fileName, filePath);
+        fileService.updateFile(file, fileName, filePath);
         eventService.saveUpdated(file, user);
 
         request.setAttribute("file", file);
